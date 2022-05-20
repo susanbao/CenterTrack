@@ -40,18 +40,20 @@ def demo(opt):
               image_names.append(os.path.join(opt.demo, file_name))
     else:
       image_names = [opt.demo]
-
   # Initialize output video
   out = None
   out_name = opt.demo[opt.demo.rfind('/') + 1:]
   print('out_name', out_name)
   if opt.save_video:
     # fourcc = cv2.VideoWriter_fourcc(*'XVID')
-    fourcc = cv2.VideoWriter_fourcc(*'H264')
-    out = cv2.VideoWriter('../results/{}.mp4'.format(
+    print("Save Video, ../results/{}.mp4".format(
+      opt.exp_id + '_' + out_name))
+    #fourcc = cv2.VideoWriter_fourcc(*'H264')
+    fourcc = cv2.VideoWriter_fourcc(*"mp4v")
+    out = cv2.VideoWriter('../results/{}'.format(
       opt.exp_id + '_' + out_name),fourcc, opt.save_framerate, (
         opt.video_w, opt.video_h))
-  
+  print("End Saving")
   if opt.debug < 5:
     detector.pause = False
   cnt = 0
@@ -77,7 +79,7 @@ def demo(opt):
       if cnt < opt.skip_first:
         continue
       
-      cv2.imshow('input', img)
+      #cv2.imshow('input', img)
 
       # track or detect the image.
       ret = detector.run(img)
@@ -95,8 +97,8 @@ def demo(opt):
       # save debug image to video
       if opt.save_video:
         out.write(ret['generic'])
-        if not is_video:
-          cv2.imwrite('../results/demo{}.jpg'.format(cnt), ret['generic'])
+        #if not is_video:
+        cv2.imwrite('../results/demo{}.jpg'.format(cnt), ret['generic'])
       
       # esc to quit and finish saving video
       if cv2.waitKey(1) == 27:
