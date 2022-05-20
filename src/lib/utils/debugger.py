@@ -205,6 +205,7 @@ class Debugger(object):
     return
 
   def show_all_imgs(self, pause=False, Time=0):
+    return 
     if 1:
       for i, v in self.imgs.items():
         cv2.imshow('{}'.format(i), v)
